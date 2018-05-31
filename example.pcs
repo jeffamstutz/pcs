@@ -1,0 +1,8 @@
+
+func main() {
+  print("what's up");
+}
+
+func otherFunc() {
+  print("what's up");
+}
