@@ -23,6 +23,7 @@
 // ========================================================================== //
 
 #include "scanner.h"
+#include "utility.h"
 
 #include <iostream>
 #include <fstream>
@@ -58,10 +59,43 @@ namespace pcs {
     }
   }
 
+  static std::vector<std::string> tokenize(
+    const std::vector<std::string> &lines
+  )
+  {
+    std::vector<std::string> tokens;
+
+    std::string token;
+
+    for (const auto &l : lines) {
+      auto nonWhitespaceItems = split(l, "\n\t ");
+
+      for (const auto &item : nonWhitespaceItems) {
+        std::cout << "found item: " << item << std::endl;
+      }
+    }
+
+    return tokens;
+  }
+
+  static void printTokens(const std::vector<std::string> &tokens)
+  {
+    if (tokens.empty())
+      return;
+
+    for (const auto &token : tokens)
+      std::cout << " | " << token;
+
+    std::cout << " |" << std::endl;
+  }
+
   void scanFile(const std::string &file)
   {
     auto lines = getLinesFromFile(file);
     printLines(lines);
+
+    auto tokens = tokenize(lines);
+    printTokens(tokens);
   }
 
 } // namespace pcs
