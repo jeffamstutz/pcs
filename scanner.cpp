@@ -26,23 +26,42 @@
 
 #include <iostream>
 #include <fstream>
+#include <vector>
 
 namespace pcs {
 
-  void scanFile(const std::string &file)
+  static std::vector<std::string> getLinesFromFile(const std::string &file)
   {
+    std::vector<std::string> lines;
+
     std::string line;
     std::ifstream fileStream(file);
-    int lineNum = 0;
     if (fileStream) {
-      while (std::getline(fileStream, line)) {
-        std::cout << "line " << lineNum << ": " << line << std::endl;
-        lineNum++;
-      }
+      while (std::getline(fileStream, line))
+        lines.push_back(line);
+
       fileStream.close();
     } else {
       std::cout << "could not open file '" << file << "'" << std::endl;
     }
+
+    return lines;
+  }
+
+  static void printLines(const std::vector<std::string> &lines)
+  {
+    int lineNum = 0;
+
+    for (const auto &line : lines) {
+      std::cout << lineNum << ": " << line << std::endl;
+      lineNum++;
+    }
+  }
+
+  void scanFile(const std::string &file)
+  {
+    auto lines = getLinesFromFile(file);
+    printLines(lines);
   }
 
 } // namespace pcs
